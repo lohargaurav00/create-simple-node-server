@@ -1,0 +1,14 @@
+{
+  "name": "shell-script-node",
+  "version": "1.0.0",
+  "description": "learn shell script with node js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "Gaurav D Lohar",
+  "license": "ISC"
+}
