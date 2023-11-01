@@ -1,7 +1,20 @@
-
 import chalk from "chalk";
 
- const questions = [
+import { validateNpmName } from "./functions.js";
+
+const questions = [
+  {
+    type: "input",
+    name: "projectName",
+    message: `What is the name of your project?`,
+    default: "my-app",
+    validate: (projectName) => {
+      const { valid, problems } = validateNpmName(projectName);
+      if (valid) return true;
+
+      return chalk.red("Invalid project name: " + problems[0]);
+    },
+  },
   {
     type: "list",
     name: "typescript",
