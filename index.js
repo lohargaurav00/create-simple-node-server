@@ -10,23 +10,30 @@
 import ora from "ora";
 import chalk from "chalk";
 
-import { animatedText, getCliAnswers } from "./helpers/functions.js";
+import {
+  animatedText,
+  changePackageJsonName,
+  getCliAnswers,
+} from "./helpers/functions.js";
 import questions from "./helpers/questions.js";
 
 const init = async () => {
   const text = "welcome to create-node-server cli";
+  console.clear();
   const coloredText = await animatedText(text);
   const spinner = ora("Loading questions...");
 
   coloredText.start();
   spinner.start().color = "yellow";
 
-  setTimeout(async () => {
-    coloredText.stop();
-    spinner.stop();
+  // setTimeout(async () => {
+  coloredText.stop();
+  spinner.stop();
 
-    const answers = await getCliAnswers(questions);
-  }, 2000);
+  const { projectName, typescript, srcDir } = await getCliAnswers(questions);
+  changePackageJsonName(projectName, typescript);
+ 
+  // }, 2000);
 };
 
 init();
