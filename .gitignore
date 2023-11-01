@@ -32,3 +32,6 @@ yarn-error.log*
 
 #!.yarn/cache
 .pnp.*
+
+
+test.js
