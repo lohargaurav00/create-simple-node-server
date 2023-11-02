@@ -1,11 +1,9 @@
 {
   "name": "create-simple-node-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "learn shell script with node js",
   "main": "index.js",
-  "bin": {
-    "create-simple-node-server": "index.js"
-  },
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"

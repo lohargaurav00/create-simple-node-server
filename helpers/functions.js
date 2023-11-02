@@ -5,6 +5,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import { exec } from "child_process";
+import { fileURLToPath } from "url";
 
 export const animatedText = async (text) => {
   const coloredText = chalkAnimation.rainbow(text);
@@ -30,7 +31,10 @@ export const validateNpmName = (name) => {
 
 export const getPathJsOrTs = (typescript) => {
   const isJsOrTs = typescript === "No" ? "js" : "ts";
-  const dirPath = path.join(process.cwd() + `/templates/${isJsOrTs}`);
+  const __filename = fileURLToPath(import.meta.url);
+  const dirPath = path.resolve(
+    `${path.dirname(__filename)}/../templates/${isJsOrTs}`
+  );
   return dirPath;
 };
 
