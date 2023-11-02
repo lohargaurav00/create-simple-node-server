@@ -26,13 +26,13 @@ jobs:
             fi
           fi
         shell: bash
-        if: github.event_name != 'release'
+        # Removed the if condition for this step to always run
 
       - name: Setup Node
         if: steps.check.outputs.changed == 'true' && github.event_name != 'release'
         uses: actions/setup-node@v2
         with:
-          node-version: '20.x'
+          node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
           
       - name: Publish package on NPM 📦
