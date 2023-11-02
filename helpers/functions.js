@@ -33,7 +33,24 @@ export const getPathJsOrTs = (typescript) => {
   return dirPath;
 };
 
-export const copyTemplateFiles = (source, destination) => {
+export const copyTemplateFilesWithSrcCheck = (
+  sourcePath,
+  destination,
+  destPath,
+  srcDir,
+  file
+) => {
+  if (fs.lstatSync(sourcePath).isDirectory()) {
+    if (file === "src" && srcDir === "No") {
+      copyTemplateFiles(sourcePath, destination); // Copy files to root directory
+    }
+    copyTemplateFiles(sourcePath, destPath); // Recursively copy subdirectory
+  } else {
+    fs.copyFileSync(sourcePath, destPath); // Copy file
+  }
+};
+
+export const copyTemplateFiles = (source, destination, srcDir) => {
   if (!fs.existsSync(destination)) {
     fs.mkdirSync(destination);
   }
@@ -43,11 +60,13 @@ export const copyTemplateFiles = (source, destination) => {
     const sourcePath = path.join(source, file);
     const destPath = path.join(destination, file);
 
-    if (fs.lstatSync(sourcePath).isDirectory()) {
-      copyTemplateFiles(sourcePath, destPath); // Recursively copy subdirectory
-    } else {
-      fs.copyFileSync(sourcePath, destPath); // Copy file
-    }
+    copyTemplateFilesWithSrcCheck(
+      sourcePath,
+      destination,
+      destPath,
+      srcDir,
+      file
+    );
   });
 };
 
@@ -60,7 +79,7 @@ export const writeTemplateFiles = (name, typescript, srcDir) => {
     process.exit(1);
   }
 
-  copyTemplateFiles(dirPath, newDirPath);
+  copyTemplateFiles(dirPath, newDirPath, srcDir);
 };
 
 export const changePackageJsonName = async (name) => {
