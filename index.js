@@ -32,10 +32,9 @@ const init = async () => {
   spinner.stop();
 
   const { projectName, typescript, srcDir } = await getCliAnswers(questions);
-  changePackageJsonName(projectName, typescript);
   writeTemplateFiles(projectName, typescript, srcDir);
+  changePackageJsonName(projectName);
 
- 
   // }, 2000);
 };
 

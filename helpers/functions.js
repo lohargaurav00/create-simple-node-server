@@ -33,17 +33,6 @@ export const getPathJsOrTs = (typescript) => {
   return dirPath;
 };
 
-export const changePackageJsonName = async (name, typescript) => {
-  const jsonPath = getPathJsOrTs(typescript) + "/package.json";
-
-  const packageJson = await JSON.parse(fs.readFileSync(jsonPath, "utf8"));
-  packageJson["name"] = name;
-
-  const newPackageJson = JSON.stringify(packageJson, null, 2);
-
-  fs.writeFileSync(jsonPath, newPackageJson);
-};
-
 export const copyTemplateFiles = (source, destination) => {
   if (!fs.existsSync(destination)) {
     fs.mkdirSync(destination);
@@ -67,11 +56,25 @@ export const writeTemplateFiles = (name, typescript, srcDir) => {
   const newDirPath = path.join(process.cwd(), name);
 
   if (fs.existsSync(newDirPath)) {
-    console.log(chalk.red(`This directory already exists: ${newDirPath}`));
-    return;
+    console.error(chalk.red(`This directory already exists: ${newDirPath}`));
+    process.exit(1);
   }
 
-  fs.mkdirSync(newDirPath);
-
   copyTemplateFiles(dirPath, newDirPath);
+};
+
+export const changePackageJsonName = async (name) => {
+  const jsonPath = path.join(process.cwd() + "/" + name, "/package.json");
+
+  if (!fs.existsSync(jsonPath)) {
+    console.error(chalk.red(`This file does not exist: ${jsonPath}`));
+    process.exit(1);
+  }
+
+  const packageJson = await JSON.parse(fs.readFileSync(jsonPath, "utf8"));
+  packageJson["name"] = name;
+
+  const newPackageJson = JSON.stringify(packageJson, null, 2);
+
+  fs.writeFileSync(jsonPath, newPackageJson);
 };
