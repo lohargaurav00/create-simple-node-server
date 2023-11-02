@@ -1,0 +1,36 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check package.json version
+        id: check
+        run: |
+          VERSION_CHANGED=$(git diff HEAD~1..HEAD -- 'package.json' | grep '"version":')
+          if [ -n "$VERSION_CHANGED" ]; then
+            echo "::set-output name=changed::true"
+          fi
+        shell: bash
+
+      - name: Setup Node
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Publish package on NPM 📦
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
