@@ -23,20 +23,34 @@ const init = async () => {
   const text = "welcome to create-node-server cli";
   console.clear();
   const coloredText = await animatedText(text);
-  const spinner = ora("Loading questions...");
+  const spinner1 = ora("Loading questions...");
 
   coloredText.start();
-  spinner.start().color = "yellow";
+  spinner1.start().color = "yellow";
 
-  // setTimeout(async () => {
-  coloredText.stop();
-  spinner.stop();
+  setTimeout(async () => {
+    coloredText.stop();
+    spinner1.succeed(chalk.green("Questions loaded successfully!"));
+    spinner1.stop();
 
-  const { projectName, typescript, srcDir } = await getCliAnswers(questions);
-  writeTemplateFiles(projectName, typescript, srcDir);
-  changePackageJsonName(projectName);
-  gitInit(projectName);
-  // }, 2000);
+    const { projectName, typescript, srcDir } = await getCliAnswers(questions);
+    console.clear();
+    coloredText.start();
+    coloredText.stop();
+    const spinner2 = ora("Creating project...");
+    spinner2.start().color = "yellow";
+
+    setTimeout(() => {
+      spinner2.text = "Copying files...";
+      writeTemplateFiles(projectName, typescript, srcDir);
+      changePackageJsonName(projectName);
+      gitInit(projectName);
+      
+      setTimeout(() => {
+        spinner2.succeed(chalk.green("Project created successfully!"));
+      }, 2000);
+    }, 1000);
+  }, 2000);
 };
 
 init();
