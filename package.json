@@ -1,5 +1,5 @@
 {
-  "name": "node-server",
+  "name": "simple-node-server",
   "version": "1.0.0",
   "description": "learn shell script with node js",
   "main": "index.js",
@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lohargaurav00/simple-node-server.git"
+    "url": "git+https://github.com/lohargaurav00/simple-node-server.git"
   },
   "author": "Gaurav D Lohar",
   "license": "ISC",
