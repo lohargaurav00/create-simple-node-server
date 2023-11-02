@@ -4,6 +4,7 @@ import validateProjectName from "validate-npm-package-name";
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import { exec } from "child_process";
 
 export const animatedText = async (text) => {
   const coloredText = chalkAnimation.rainbow(text);
@@ -43,8 +44,9 @@ export const copyTemplateFilesWithSrcCheck = (
   if (fs.lstatSync(sourcePath).isDirectory()) {
     if (file === "src" && srcDir === "No") {
       copyTemplateFiles(sourcePath, destination); // Copy files to root directory
+    } else {
+      copyTemplateFiles(sourcePath, destPath); // Recursively copy subdirectory
     }
-    copyTemplateFiles(sourcePath, destPath); // Recursively copy subdirectory
   } else {
     fs.copyFileSync(sourcePath, destPath); // Copy file
   }
@@ -96,4 +98,19 @@ export const changePackageJsonName = async (name) => {
   const newPackageJson = JSON.stringify(packageJson, null, 2);
 
   fs.writeFileSync(jsonPath, newPackageJson);
+};
+
+//for git init and commit initial to git
+
+export const gitInit = (name) => {
+  const gitPath = path.join(process.cwd() + "/" + name);
+  exec(
+    `cd ${gitPath} && git init && git add . && git commit -m "initial commit"`,
+    (err) => {
+      if (err) {
+        console.error(chalk.red(err));
+        return;
+      }
+    }
+  );
 };

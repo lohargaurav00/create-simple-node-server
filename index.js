@@ -14,6 +14,7 @@ import {
   animatedText,
   changePackageJsonName,
   getCliAnswers,
+  gitInit,
   writeTemplateFiles,
 } from "./helpers/functions.js";
 import questions from "./helpers/questions.js";
@@ -34,7 +35,7 @@ const init = async () => {
   const { projectName, typescript, srcDir } = await getCliAnswers(questions);
   writeTemplateFiles(projectName, typescript, srcDir);
   changePackageJsonName(projectName);
-
+  gitInit(projectName);
   // }, 2000);
 };
 
