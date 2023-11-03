@@ -18,7 +18,8 @@
     "boilerplate",
     "express",
     "typescript",
-    "node-server"
+    "node-server",
+    "create-simple-node-server"
   ],
   "repository": {
     "type": "git",
