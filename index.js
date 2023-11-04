@@ -12,6 +12,7 @@ import chalk from "chalk";
 
 import {
   animatedText,
+  changeFilesName,
   changePackageJsonName,
   getCliAnswers,
   gitInit,
@@ -44,8 +45,9 @@ const init = async () => {
       spinner2.text = "Copying files...";
       writeTemplateFiles(projectName, typescript, srcDir);
       changePackageJsonName(projectName);
+      changeFilesName(projectName);
       gitInit(projectName);
-      
+
       setTimeout(() => {
         spinner2.succeed(chalk.green("Project created successfully!"));
       }, 2000);

@@ -104,6 +104,20 @@ export const changePackageJsonName = async (name) => {
   fs.writeFileSync(jsonPath, newPackageJson);
 };
 
+export const changeFilesName = (name) => {
+  const filePath = path.join(process.cwd(), name);
+  const files = fs.readdirSync(filePath);
+
+  files.forEach((file) => {
+    if (file === ".env.example") {
+      fs.renameSync(`${filePath}/${file}`, `${filePath}/.env`);
+    } else if (file === ".gitignore.example") {
+      fs.renameSync(`${filePath}/${file}`, `${filePath}/.gitignore`);
+    }
+    return;
+  });
+};
+
 //for git init and commit initial to git
 
 export const gitInit = (name) => {
