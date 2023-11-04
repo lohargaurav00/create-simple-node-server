@@ -20,7 +20,7 @@ const questions = [
     name: "typescript",
     message: `Would you like to have ${chalk.blue("Typescript")}?`,
     choices: ["Yes", "No"],
-    default: "No",
+    default: "Yes",
   },
   {
     type: "list",
