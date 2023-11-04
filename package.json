@@ -1,6 +1,6 @@
 {
   "name": "create-simple-node-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "learn shell script with node js",
   "main": "index.js",
   "bin": "index.js",
